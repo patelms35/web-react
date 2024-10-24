@@ -2,56 +2,97 @@ import React from "react";
 import "./home.css";
 import ScrollReveal from "scrollreveal";
 
+// 1 .typing Animation baki 
+// 2. portfolio ma view more nu section baki
+// 3. contact ma form submit karvanu je YT ma jovanu 6 
+// 4. phone ma menu button ma click karva ma problem 6
+
 const Home = () => {
   function redirectToNextPage() {
     window.location.href = "https://patelmark.in/";
   }
 
   //Services section - Modal
-  const serviceModals = document.querySelectorAll(".service-modal");
-  const learnmoreBtns = document.querySelectorAll(".learn-more-btn");
-  const modalCloseBtns = document.querySelectorAll(".modal-close-btn");
+  React.useEffect(() => {
+    const serviceModals = document.querySelectorAll(".service-modal");
+    const learnmoreBtns = document.querySelectorAll(".learn-more-btn");
+    const modalCloseBtns = document.querySelectorAll(".modal-close-btn");
 
-  var modal = function (modalClick) {
-    serviceModals[modalClick].classList.add("active");
-  };
+    var modal = function (modalClick) {
+      serviceModals[modalClick].classList.add("active");
+    };
 
-  learnmoreBtns.forEach((learnmoreBtn, i) => {
-    learnmoreBtn.addEventListener("click", () => {
-      modal(i);
-    });
-  });
-
-  modalCloseBtns.forEach((modalCloseBtn) => {
-    modalCloseBtn.addEventListener("click", () => {
-      serviceModals.forEach((modalView) => {
-        modalView.classList.remove("active");
+    learnmoreBtns.forEach((learnmoreBtn, i) => {
+      learnmoreBtn.addEventListener("click", () => {
+        modal(i);
       });
     });
-  });
+
+    modalCloseBtns.forEach((modalCloseBtn) => {
+      modalCloseBtn.addEventListener("click", () => {
+        serviceModals.forEach((modalView) => {
+          modalView.classList.remove("active");
+        });
+      });
+    });
+
+    return () => {
+      learnmoreBtns.forEach((learnmoreBtn, i) => {
+        learnmoreBtn.removeEventListener("click", () => {
+          modal(i);
+        });
+      });
+
+      modalCloseBtns.forEach((modalCloseBtn) => {
+        modalCloseBtn.removeEventListener("click", () => {
+          serviceModals.forEach((modalView) => {
+            modalView.classList.remove("active");
+          });
+        });
+      });
+    };
+  }, []);
 
   //Portfolio section - Modal
-  const portfolioModals = document.querySelectorAll(".porfolio-model");
-  const imgCards = document.querySelectorAll(".img-card");
-  const portfolioCloseBtns = document.querySelectorAll(".portfolio-close-btn");
+  React.useEffect(() => {
+    const portfolioModals = document.querySelectorAll(".porfolio-model");
+    const imgCards = document.querySelectorAll(".img-card");
+    const portfolioCloseBtns = document.querySelectorAll(".portfolio-close-btn");
 
-  var portfolioModal = function (modalClick) {
-    portfolioModals[modalClick].classList.add("active");
-  };
+    var portfolioModal = function (modalClick) {
+      portfolioModals[modalClick].classList.add("active");
+    };
 
-  imgCards.forEach((imgCard, i) => {
-    imgCard.addEventListener("click", () => {
-      portfolioModal(i);
-    });
-  });
-
-  portfolioCloseBtns.forEach((portfolioCloseBtn) => {
-    portfolioCloseBtn.addEventListener("click", () => {
-      portfolioModals.forEach((portfolioModalView) => {
-        portfolioModalView.classList.remove("active");
+    imgCards.forEach((imgCard, i) => {
+      imgCard.addEventListener("click", () => {
+        portfolioModal(i);
       });
     });
-  });
+
+    portfolioCloseBtns.forEach((portfolioCloseBtn) => {
+      portfolioCloseBtn.addEventListener("click", () => {
+        portfolioModals.forEach((portfolioModalView) => {
+          portfolioModalView.classList.remove("active");
+        });
+      });
+    });
+
+    return () => {
+      imgCards.forEach((imgCard, i) => {
+        imgCard.removeEventListener("click", () => {
+          portfolioModal(i);
+        });
+      });
+
+      portfolioCloseBtns.forEach((portfolioCloseBtn) => {
+        portfolioCloseBtn.removeEventListener("click", () => {
+          portfolioModals.forEach((portfolioModalView) => {
+            portfolioModalView.classList.remove("active");
+          });
+        });
+      });
+    };
+  }, []);
 
   //Website dark/light theme
   React.useEffect(() => {
@@ -535,7 +576,7 @@ const Home = () => {
                 <div className="hr" />
                 <h4>
                   <label>
-                    <a className="acolor" href="images/Internship.jpg">
+                    <a className="acolor" href="/Internship.jpg">
                       UI/UX Designer
                     </a>
                   </label>

@@ -1,13 +1,220 @@
 import React from "react";
 import "./home.css";
+import ScrollReveal from "scrollreveal";
 
 const Home = () => {
+  function redirectToNextPage() {
+    window.location.href = "https://patelmark.in/";
+  }
+
+  //Services section - Modal
+  const serviceModals = document.querySelectorAll(".service-modal");
+  const learnmoreBtns = document.querySelectorAll(".learn-more-btn");
+  const modalCloseBtns = document.querySelectorAll(".modal-close-btn");
+
+  var modal = function (modalClick) {
+    serviceModals[modalClick].classList.add("active");
+  };
+
+  learnmoreBtns.forEach((learnmoreBtn, i) => {
+    learnmoreBtn.addEventListener("click", () => {
+      modal(i);
+    });
+  });
+
+  modalCloseBtns.forEach((modalCloseBtn) => {
+    modalCloseBtn.addEventListener("click", () => {
+      serviceModals.forEach((modalView) => {
+        modalView.classList.remove("active");
+      });
+    });
+  });
+
+  //Portfolio section - Modal
+  const portfolioModals = document.querySelectorAll(".porfolio-model");
+  const imgCards = document.querySelectorAll(".img-card");
+  const portfolioCloseBtns = document.querySelectorAll(".portfolio-close-btn");
+
+  var portfolioModal = function (modalClick) {
+    portfolioModals[modalClick].classList.add("active");
+  };
+
+  imgCards.forEach((imgCard, i) => {
+    imgCard.addEventListener("click", () => {
+      portfolioModal(i);
+    });
+  });
+
+  portfolioCloseBtns.forEach((portfolioCloseBtn) => {
+    portfolioCloseBtn.addEventListener("click", () => {
+      portfolioModals.forEach((portfolioModalView) => {
+        portfolioModalView.classList.remove("active");
+      });
+    });
+  });
+
+  //Website dark/light theme
+  React.useEffect(() => {
+    const themeBtn = document.querySelector(".theme-btn");
+
+    const getCurrentTheme = () =>
+      document.body.classList.contains("dark-theme") ? "dark" : "light";
+    const getCurrentIcon = () =>
+      themeBtn.classList.contains("sun") ? "sun" : "moon";
+
+    const savedTheme = localStorage.getItem("saved-theme");
+    const savedIcon = localStorage.getItem("saved-icon");
+
+    if (savedTheme) {
+      document.body.classList[savedTheme === "dark" ? "add" : "remove"](
+        "dark-theme"
+      );
+      themeBtn.classList[savedIcon === "sun" ? "add" : "remove"]("sun");
+    }
+
+    const handleThemeToggle = () => {
+      document.body.classList.toggle("dark-theme");
+      themeBtn.classList.toggle("sun");
+
+      localStorage.setItem("saved-theme", getCurrentTheme());
+      localStorage.setItem("saved-icon", getCurrentIcon());
+    };
+
+    themeBtn.addEventListener("click", handleThemeToggle);
+
+    return () => {
+      themeBtn.removeEventListener("click", handleThemeToggle);
+    };
+  }, []);
+
+  //Scroll to top button
+  React.useEffect(() => {
+    const scrollTopBtn = document.querySelector(".scrollToTop-btn");
+
+    const handleScroll = () => {
+      scrollTopBtn.classList.toggle("active", window.scrollY > 500);
+    };
+
+    const handleScrollToTop = () => {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    scrollTopBtn.addEventListener("click", handleScrollToTop);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      scrollTopBtn.removeEventListener("click", handleScrollToTop);
+    };
+  }, []);
+
+  //Navigation menu items active on page scroll
+  window.addEventListener("scroll", () => {
+    const sections = document.querySelectorAll("section");
+    const scrollY = window.pageYOffset;
+
+    sections.forEach((current) => {
+      let sectionHeight = current.offsetHeight;
+      let sectionTop = current.offsetTop - 50;
+      let id = current.getAttribute("id");
+
+      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+        document
+          .querySelector(".nav-items a[href*=" + id + "]")
+          .classList.add("active");
+      } else {
+        document
+          .querySelector(".nav-items a[href*=" + id + "]")
+          .classList.remove("active");
+      }
+    });
+  });
+
+  //Responsive navigation menu toggle
+
+  React.useEffect(() => {
+    const menuBtn = document.querySelector(".nav-menu-btn");
+    const closeBtn = document.querySelector(".nav-close-btn");
+    const navigation = document.querySelector(".navigation");
+    const navItems = document.querySelectorAll(".nav-items a");
+
+    menuBtn.addEventListener("click", () => {
+      navigation.classList.add("active");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      navigation.classList.remove("active");
+    });
+
+    navItems.forEach((navItem) => {
+      navItem.addEventListener("click", () => {
+        navigation.classList.remove("active");
+      });
+    });
+  }, []);
+
+  //Scroll reveal animations
+  React.useEffect(() => {
+    //Common reveal options to create reveal animations
+    ScrollReveal({
+      //reset: true,
+      distance: "60px",
+      duration: 2500,
+      delay: 100,
+    });
+
+    //Target elements, and specify options to create reveal animations
+    ScrollReveal().reveal(
+      ".home .info h2, .section-title-01, .section-title-02",
+      { delay: 500, origin: "left" }
+    );
+    ScrollReveal().reveal(".home .info h3, .home .info p, .about-info .btn", {
+      delay: 600,
+      origin: "right",
+    });
+    ScrollReveal().reveal(".home .info .btn", { delay: 700, origin: "bottom" });
+    ScrollReveal().reveal(".media-icons i, .contact-left li", {
+      delay: 500,
+      origin: "left",
+      interval: 200,
+    });
+    ScrollReveal().reveal(".home-img, .about-img", {
+      delay: 500,
+      origin: "bottom",
+    });
+    ScrollReveal().reveal(".about .description, .contact-right", {
+      delay: 600,
+      origin: "right",
+    });
+    ScrollReveal().reveal(".about .professional-list li", {
+      delay: 500,
+      origin: "right",
+      interval: 200,
+    });
+    ScrollReveal().reveal(
+      ".skills-description, .services-description, .contact-card, .client-swiper, .contact-left h2",
+      { delay: 700, origin: "left" }
+    );
+    ScrollReveal().reveal(
+      ".experience-card, .service-card, .education, .portfolio .img-card",
+      { delay: 800, origin: "bottom", interval: 200 }
+    );
+    ScrollReveal().reveal("footer .group", {
+      delay: 500,
+      origin: "top",
+      interval: 200,
+    });
+  }, []);
+
+
   return (
     <>
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
       />
+
       {/*=======Scroll to top button=======*/}
       <div className="scrollToTop-btn flex-center">
         <i className="fas fa-arrow-up" />
@@ -76,7 +283,7 @@ const Home = () => {
             </a>
           </div>
           <div className="home-img">
-            <img src="./public/mainpick.png" alt="" />
+            <img src="/mainpick.png" alt="" />
           </div>
         </div>
         <a href="#about" className="scroll-down">
@@ -91,7 +298,7 @@ const Home = () => {
           <h2 className="section-title-02">About Me</h2>
           <div className="content flex-center">
             <div className="about-img">
-              <img src="./public/22.png" alt="" />
+              <img src="./22.png" alt="" />
             </div>
             <div className="about-info">
               <div className="description">
@@ -127,7 +334,7 @@ const Home = () => {
                   </span>
                 </li>
               </ul>
-              <a href="./public/Mark Patel Resume.pdf" className="btn">
+              <a href="./Mark Patel Resume.pdf" className="btn">
                 {" "}
                 Download Resume <i className="fas fa-download" />
               </a>
@@ -249,7 +456,7 @@ const Home = () => {
                     <br />
                     <h5>
                       <label>
-                        <a className="acolor" href="./public/figma.jpg">
+                        <a className="acolor" href=".Black/figma.jpg">
                           Certificate
                         </a>
                       </label>
@@ -263,7 +470,7 @@ const Home = () => {
                     <br />
                     <h5>
                       <label>
-                        <a className="acolor" href="./public/AdobeXD.jpg">
+                        <a className="acolor" href="./AdobeXD.jpg">
                           Certificate
                         </a>
                       </label>
@@ -277,7 +484,7 @@ const Home = () => {
                     <br />
                     <h5>
                       <label>
-                        <a className="acolor" href="./public/web.jpg">
+                        <a className="acolor" href="./web.jpg">
                           Certificate
                         </a>
                       </label>
@@ -291,7 +498,7 @@ const Home = () => {
                     <br />
                     <h5>
                       <label>
-                        <a className="acolor" href="./public/2.jpg">
+                        <a className="acolor" href="./2.jpg">
                           Certificate
                         </a>
                       </label>
@@ -305,7 +512,7 @@ const Home = () => {
                     <br />
                     <h5>
                       <label>
-                        <a className="acolor" href="./public/python.pdf">
+                        <a className="acolor" href="./python.pdf">
                           Certificate
                         </a>
                       </label>
@@ -555,7 +762,7 @@ const Home = () => {
                     <h3>UI/UX Design &amp; Website</h3>
                     <span>Figma &amp; React.js</span>
                   </div>
-                  <img src="./public/ICMR-cover.png" alt="" />
+                  <img src="./ICMR-cover.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -566,7 +773,7 @@ const Home = () => {
                         <a href="https://indiaems.icmr.org.in/">Live Website</a>
                       </label>
                     </h5>
-                    <img src="./public/ICMR-back.png" alt="" />
+                    <img src="./ICMR-back.png" alt="" />
                     <p>
                       At Parul University, our team specializes in website
                       development 🌐, guided by our mentor, Umang Panchal,
@@ -586,7 +793,7 @@ const Home = () => {
                     <h3>UI/UX Design &amp; Development</h3>
                     <span>Figma &amp; React.js</span>
                   </div>
-                  <img src="./public/ar-cover.jpeg" alt="" />
+                  <img src="./ar-cover.jpeg" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -597,7 +804,7 @@ const Home = () => {
                         <a href="https://www.artificelabs.com/">Live Website</a>
                       </label>
                     </h5>
-                    <img src="./public/ar-back.png" alt="" />
+                    <img src="./ar-back.png" alt="" />
                     <p>
                       I recently designed and developed a fully responsive
                       website using Figma 🎨 for the UI/UX design and React.js
@@ -621,7 +828,7 @@ const Home = () => {
                     <h3>UI/UX Design</h3>
                     <span>Figma</span>
                   </div>
-                  <img src="./public/Trip.gif" alt="" />
+                  <img src="./Trip.gif" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -634,7 +841,7 @@ const Home = () => {
                         </a>
                       </label>
                     </h5>
-                    <img src="./public/Trip Planner.png" alt="" />
+                    <img src="./Trip Planner.png" alt="" />
                     <p>
                       Certainly! The Trip Navigator UI Kit is an extensive
                       toolkit designed for crafting innovative travel apps.
@@ -664,7 +871,7 @@ const Home = () => {
                     <h3>Website</h3>
                     <span>Password Generator</span>
                   </div>
-                  <img src="./public/Pass.png" alt="" />
+                  <img src="./Pass.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -677,7 +884,7 @@ const Home = () => {
                         </a>
                       </label>
                     </h5>
-                    <img src="./public/Pass.png" alt="" />
+                    <img src="./Pass.png" alt="" />
                     <p>
                       🔒 Create your own secure password generator website! 💻
                       Using HTML, CSS, and JavaScript, you can build a stylish,
@@ -710,7 +917,7 @@ const Home = () => {
                     <h3>Website</h3>
                     <span>Calculator Website</span>
                   </div>
-                  <img src="./public/5 all.png" alt="" />
+                  <img src="./5 all.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -723,7 +930,7 @@ const Home = () => {
                         </a>
                       </label>
                     </h5>
-                    <img src="./public/5 all.png" alt="" />
+                    <img src="./5 all.png" alt="" />
                     <p>
                       Building a Calculator website with HTML, CSS, and
                       JavaScript is a great way to enhance your web development
@@ -760,20 +967,20 @@ const Home = () => {
                     <h3>Website</h3>
                     <span>Temperature-Converter website</span>
                   </div>
-                  <img src="./public/temp back.png" alt="" />
+                  <img src="./temp back.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
                     <i className="fas fa-times portfolio-close-btn" />
                     <h3>Website</h3>
-                    <img src="./public/temp back.png" alt="" />
+                    <img src="./temp back.png" alt="" />
                     <p>
                       Creating a temperature converter using HTML, CSS, and
                       JavaScript is a fun project for beginners. 🌡️ With HTML,
                       you can design the input and output fields, CSS can style
                       them beautifully, and JavaScript adds the logic to convert
-                      between Celsius and Fahrenheit. 🔥❄️ It's an interactive
-                      way to learn web development!
+                      between Celsius and Fahrenheit. 🔥❄️ It&apos;s an
+                      interactive way to learn web development!
                     </p>
                     <br />
                     <div className="card-certificet">
@@ -794,7 +1001,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <button className="learn-more" onclick="redirectToNextPage()">
+        <button className="learn-more" onClick={redirectToNextPage}>
           <span className="circle" aria-hidden="true">
             <span className="icon arrow" />
           </span>
@@ -809,7 +1016,7 @@ const Home = () => {
           <h2 className="section-title-02">Contact Me</h2>
           <div className="content">
             <div className="contact-left">
-              <h2>Let's discuss your project</h2>
+              <h2>Let&apos;s discuss your project</h2>
               <ul className="contact-list">
                 <li>
                   <h3 className="item-title">
@@ -837,7 +1044,7 @@ const Home = () => {
             </div>
             <div className="contact-right">
               <p>
-                I'm always open to discussing product
+                I&apos;m always open to discussing product
                 <br />
                 <span>design work or partnerships.</span>
               </p>
@@ -949,6 +1156,10 @@ const Home = () => {
           </li>
         </div>
       </footer>
+
+      {/*=======Preloader=======*/}
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script src="https://smtpjs.com/v3/smtp.js"></script>
     </>
   );
 };

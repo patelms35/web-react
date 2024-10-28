@@ -2,8 +2,149 @@ import React from "react";
 import "./portfolio.css";
 
 const Portfolio = () => {
+  //Portfolio section - Modal
+  React.useEffect(() => {
+    const portfolioModals = document.querySelectorAll(".porfolio-model");
+    const imgCards = document.querySelectorAll(".img-card");
+    const portfolioCloseBtns = document.querySelectorAll(
+      ".portfolio-close-btn"
+    );
+
+    var portfolioModal = function (modalClick) {
+      portfolioModals[modalClick].classList.add("active");
+    };
+
+    imgCards.forEach((imgCard, i) => {
+      imgCard.addEventListener("click", () => {
+        portfolioModal(i);
+      });
+    });
+
+    portfolioCloseBtns.forEach((portfolioCloseBtn) => {
+      portfolioCloseBtn.addEventListener("click", () => {
+        portfolioModals.forEach((portfolioModalView) => {
+          portfolioModalView.classList.remove("active");
+        });
+      });
+    });
+
+    // Cleanup event listeners on component unmount
+    return () => {
+      imgCards.forEach((imgCard, i) => {
+        imgCard.removeEventListener("click", () => {
+          portfolioModal(i);
+        });
+      });
+
+      portfolioCloseBtns.forEach((portfolioCloseBtn) => {
+        portfolioCloseBtn.removeEventListener("click", () => {
+          portfolioModals.forEach((portfolioModalView) => {
+            portfolioModalView.classList.remove("active");
+          });
+        });
+      });
+    };
+  }, []);
+
+  React.useEffect(() => {
+    // Filter portfolio
+    const filterButtons = document.querySelectorAll(".button-container button");
+    const filterableCards = document.querySelectorAll(".portfolio-list .card");
+
+    // Define the filtercards function
+    const filtercards = (e) => {
+      document.querySelector(".active").classList.remove("active");
+      e.target.classList.add("active");
+
+      // Iterate over each filterable card
+      filterableCards.forEach((card) => {
+        // Add "hide" class to hide the card initially
+        card.classList.add("hide");
+        // Check if the card matches the selected filter or "all" is selected
+        if (
+          card.dataset.name === e.target.dataset.name ||
+          e.target.dataset.name === "all"
+        ) {
+          card.classList.remove("hide");
+        }
+      });
+    };
+
+    // Function to filter cards based on filter buttons
+    filterButtons.forEach((button) =>
+      button.addEventListener("click", filtercards)
+    );
+
+    // Cleanup event listeners on component unmount
+    return () => {
+      filterButtons.forEach((button) =>
+        button.removeEventListener("click", filtercards)
+      );
+    };
+  }, []);
+
+  //Website dark/light theme
+  React.useEffect(() => {
+    const themeBtn = document.querySelector(".theme-btn");
+
+    const getCurrentTheme = () =>
+      document.body.classList.contains("dark-theme") ? "dark" : "light";
+    const getCurrentIcon = () =>
+      themeBtn.classList.contains("sun") ? "sun" : "moon";
+
+    const savedTheme = localStorage.getItem("saved-theme");
+    const savedIcon = localStorage.getItem("saved-icon");
+
+    if (savedTheme) {
+      document.body.classList[savedTheme === "dark" ? "add" : "remove"](
+        "dark-theme"
+      );
+      themeBtn.classList[savedIcon === "sun" ? "add" : "remove"]("sun");
+    }
+
+    const handleThemeToggle = () => {
+      document.body.classList.toggle("dark-theme");
+      themeBtn.classList.toggle("sun");
+
+      localStorage.setItem("saved-theme", getCurrentTheme());
+      localStorage.setItem("saved-icon", getCurrentIcon());
+    };
+
+    themeBtn.addEventListener("click", handleThemeToggle);
+
+    return () => {
+      themeBtn.removeEventListener("click", handleThemeToggle);
+    };
+  }, []);
+
+  //Scroll to top button
+  React.useEffect(() => {
+    const scrollTopBtn = document.querySelector(".scrollToTop-btn");
+
+    const handleScroll = () => {
+      scrollTopBtn.classList.toggle("active", window.scrollY > 500);
+    };
+
+    const handleScrollToTop = () => {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    scrollTopBtn.addEventListener("click", handleScrollToTop);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      scrollTopBtn.removeEventListener("click", handleScrollToTop);
+    };
+  }, []);
+
   return (
     <>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      />
       {/*=======Light/Dark theme button=======*/}
       <div className="theme-btn flex-center">
         <i className="fas fa-moon" />
@@ -17,20 +158,20 @@ const Portfolio = () => {
       {/*=======Header=======*/}
       <header>
         <div className="nav-bar">
-          <a href="#" className="logo">
+          <a href="/" className="logo">
             Mark
           </a>
           <div className="navigation">
             <div className="nav-items">
               <div className="nav-close-btn" />
-              <a href="index.html">Home</a>
-              <a href="index.html">About</a>
-              <a href="index.html">Skills</a>
-              <a href="index.html">Services</a>
+              <a href="/">Home</a>
+              <a href="/">About</a>
+              <a href="/">Skills</a>
+              <a href="/">Services</a>
               <a className="active" href="#portfolio">
                 Portfolio
               </a>
-              <a href="index.html">Contact</a>
+              <a href="/">Contact</a>
             </div>
           </div>
           <div className="nav-menu-btn" />
@@ -71,7 +212,7 @@ const Portfolio = () => {
                     <h3>UI/UX Design &amp; Development</h3>
                     <span>Figma &amp; React.js</span>
                   </div>
-                  <img src="images/ar-cover.jpeg" alt="" />
+                  <img src="/ar-cover.jpeg" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -82,7 +223,7 @@ const Portfolio = () => {
                         <a href="https://www.artificelabs.com/">Live Website</a>
                       </label>
                     </h5>
-                    <img src="images/ar-back.png" alt="" />
+                    <img src="/ar-back.png" alt="" />
                     <p>
                       I recently designed and developed a fully responsive
                       website using Figma 🎨 for the UI/UX design and React.js
@@ -106,7 +247,7 @@ const Portfolio = () => {
                     <h3>UI/UX Design &amp; Website</h3>
                     <span>Figma &amp; React.js</span>
                   </div>
-                  <img src="images/ICMR-cover.png" alt="" />
+                  <img src="/ICMR-cover.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -117,7 +258,7 @@ const Portfolio = () => {
                         <a href="https://indiaems.icmr.org.in/">Live Website</a>
                       </label>
                     </h5>
-                    <img src="images/ICMR-back.png" alt="" />
+                    <img src="/ICMR-back.png" alt="" />
                     <p>
                       At Parul University, our team specializes in website
                       development 🌐, guided by our mentor, Umang Panchal,
@@ -137,7 +278,7 @@ const Portfolio = () => {
                     <h3>UI/UX Design</h3>
                     <span>Figma</span>
                   </div>
-                  <img src="images/Trip.gif" alt="" />
+                  <img src="/Trip.gif" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -150,7 +291,7 @@ const Portfolio = () => {
                         </a>
                       </label>
                     </h5>
-                    <img src="images/Trip Planner.png" alt="" />
+                    <img src="/Trip Planner.png" alt="" />
                     <p>
                       Certainly! The Trip Navigator UI Kit is an extensive
                       toolkit designed for crafting innovative travel apps.
@@ -163,7 +304,7 @@ const Portfolio = () => {
                     <div className="card-certificet">
                       <h4>
                         <label>
-                          <a className="acolor" href="images/Tech.jpg">
+                          <a className="acolor" href="/Tech.jpg">
                             Certificate
                           </a>
                         </label>
@@ -183,7 +324,7 @@ const Portfolio = () => {
                     <h3>UI/UX Design</h3>
                     <span>Figma</span>
                   </div>
-                  <img src="images/back shoe.png" alt="" />
+                  <img src="/back shoe.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -196,7 +337,7 @@ const Portfolio = () => {
                         </a>
                       </label>
                     </h5>
-                    <img src="images/Cover.png" alt="" />
+                    <img src="/Cover.png" alt="" />
                     <p>
                       Designing a shoe application UI/UX in Figma is an exciting
                       way to showcase your design skills. 👟✨ Figma&apos;s
@@ -204,11 +345,11 @@ const Portfolio = () => {
                       visually appealing designs. With features like
                       prototyping, you can simulate user journeys, ensuring a
                       seamless shopping experience. 🎨📱 Focus on clear
-                      navigation, high-quality images, and easy-to-use filters
-                      to enhance usability. 🛍️💡 This project not only
-                      highlights your creativity but also your ability to think
-                      from a user&apos;s perspective, essential for effective
-                      UI/UX design. 🚀
+                      navigation, high-quality , and easy-to-use filters to
+                      enhance usability. 🛍️💡 This project not only highlights
+                      your creativity but also your ability to think from a
+                      user&apos;s perspective, essential for effective UI/UX
+                      design. 🚀
                     </p>
                   </div>
                 </div>
@@ -221,7 +362,7 @@ const Portfolio = () => {
                     <h3>Website</h3>
                     <span>Password Generator</span>
                   </div>
-                  <img src="images/Pass.png" alt="" />
+                  <img src="/Pass.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -234,7 +375,7 @@ const Portfolio = () => {
                         </a>
                       </label>
                     </h5>
-                    <img src="images/Pass.png" alt="" />
+                    <img src="/Pass.png" alt="" />
                     <p>
                       🔒 Create your own secure password generator website! 💻
                       Using HTML, CSS, and JavaScript, you can build a stylish,
@@ -267,7 +408,7 @@ const Portfolio = () => {
                     <h3>UI/UX Design</h3>
                     <span>Figma</span>
                   </div>
-                  <img src="images/1.1 front.png" alt="" />
+                  <img src="/1.1 front.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -278,7 +419,7 @@ const Portfolio = () => {
                         <a href="404/404.html">Demo Video</a>
                       </label>
                     </h5>
-                    <img src="images/1.1 back.png" alt="" />
+                    <img src="/1.1 back.png" alt="" />
                     <p>
                       Designing a shoe application UX in Figma is an exciting
                       endeavor. 👟✨ Figma&apos;s intuitive interface allows you
@@ -298,7 +439,7 @@ const Portfolio = () => {
                     <h3>UI/UX Design</h3>
                     <span>Figma</span>
                   </div>
-                  <img src="images/Front car.png" alt="" />
+                  <img src="/Front car.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -311,7 +452,7 @@ const Portfolio = () => {
                         </a>
                       </label>
                     </h5>
-                    <img src="images/Youtube.png" alt="" />
+                    <img src="/Youtube.png" alt="" />
                     <p>
                       I Create UX Design For Car Dealer app or websites design
                       in figma with animation and Different types og pages check
@@ -328,7 +469,7 @@ const Portfolio = () => {
                     <h3>UI/UX Design</h3>
                     <span>Figma</span>
                   </div>
-                  <img src="images/1 Front.png" alt="" />
+                  <img src="/1 Front.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -341,7 +482,7 @@ const Portfolio = () => {
                         </a>
                       </label>
                     </h5>
-                    <img src="images/1 back.png" alt="" />
+                    <img src="/1 back.png" alt="" />
                     <p>
                       I Create UX Design For Apple Watch and Airpods Max . This
                       UX design start to home . In this UX design customize
@@ -360,7 +501,7 @@ const Portfolio = () => {
                     <h3>UI/UX Design</h3>
                     <span>Figma</span>
                   </div>
-                  <img src="images/2 front.png" alt="" />
+                  <img src="/2 front.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -371,7 +512,7 @@ const Portfolio = () => {
                         <a href="404/404.html">Demo Video</a>
                       </label>
                     </h5>
-                    <img src="images/2 back.png" alt="" />
+                    <img src="/2 back.png" alt="" />
                     <p>This UX design recreate from apple Website</p>
                   </div>
                 </div>
@@ -384,7 +525,7 @@ const Portfolio = () => {
                     <h3>UI/UX Design</h3>
                     <span>Figma</span>
                   </div>
-                  <img src="images/watch front.png" alt="" />
+                  <img src="/watch front.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -397,7 +538,7 @@ const Portfolio = () => {
                         </a>
                       </label>
                     </h5>
-                    <img src="images/3 back.png" alt="" />
+                    <img src="/3 back.png" alt="" />
                     <p>This Animated UX design for Apple Watch Utlra</p>
                   </div>
                 </div>
@@ -410,7 +551,7 @@ const Portfolio = () => {
                     <h3>Website</h3>
                     <span>CountDown Timer Website</span>
                   </div>
-                  <img src="images/4 All.png" alt="" />
+                  <img src="/4 All.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -421,7 +562,7 @@ const Portfolio = () => {
                         <a href="404/404.html">Demo Video</a>
                       </label>
                     </h5>
-                    <img src="images/4 All.png" alt="" />
+                    <img src="/4 All.png" alt="" />
                     <p />
                   </div>
                 </div>
@@ -434,7 +575,7 @@ const Portfolio = () => {
                     <h3>Website</h3>
                     <span>Calculator Website</span>
                   </div>
-                  <img src="images/5 all.png" alt="" />
+                  <img src="/5 all.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
@@ -447,7 +588,7 @@ const Portfolio = () => {
                         </a>
                       </label>
                     </h5>
-                    <img src="images/5 all.png" alt="" />
+                    <img src="/5 all.png" alt="" />
                     <p>
                       Building a Calculator website with HTML, CSS, and
                       JavaScript is a great way to enhance your web development
@@ -484,13 +625,13 @@ const Portfolio = () => {
                     <h3>Website</h3>
                     <span>Temperature-Converter website</span>
                   </div>
-                  <img src="images/temp back.png" alt="" />
+                  <img src="/temp back.png" alt="" />
                 </div>
                 <div className="porfolio-model flex-center">
                   <div className="portfolio-model-body">
                     <i className="fas fa-times portfolio-close-btn" />
                     <h3>Website</h3>
-                    <img src="images/temp back.png" alt="" />
+                    <img src="/temp back.png" alt="" />
                     <p>
                       Creating a temperature converter using HTML, CSS, and
                       JavaScript is a fun project for beginners. 🌡️ With HTML,
@@ -526,7 +667,7 @@ const Portfolio = () => {
           <div className="about group">
             <h2>
               <li>
-                <a href="#home">Mark</a>
+                <a href="/">Mark</a>
               </li>
             </h2>
             <p>UI / UX Designer</p>
@@ -536,19 +677,19 @@ const Portfolio = () => {
             <h3>More</h3>
             <ul>
               <li>
-                <a href="#home">Home</a>
+                <a href="/">Home</a>
               </li>
               <li>
-                <a href="#about">About</a>
+                <a href="/">About</a>
               </li>
               <li>
-                <a href="#skills">Skills</a>
+                <a href="/">Skills</a>
               </li>
               <li>
-                <a href="#Services">Services</a>
+                <a href="/">Services</a>
               </li>
               <li>
-                <a href="#Portfolio">Portfolio</a>
+                <a href="/">Project</a>
               </li>
             </ul>
           </div>
@@ -567,11 +708,6 @@ const Portfolio = () => {
                 </a>
               </li>
               <li>
-                <a href="https://twitter.com/PatelMark9">
-                  <i className="fab fa-twitter" />
-                </a>
-              </li>
-              <li>
                 <a href="https://github.com/patelms35">
                   <i className="fab fa-github" />
                 </a>
@@ -584,6 +720,12 @@ const Portfolio = () => {
               <li>
                 <a href="https://www.linkedin.com/in/patelmark6172">
                   <i className="fab fa-linkedin" />
+                </a>
+              </li>
+              <li>
+                {" "}
+                <a href="https://www.figma.com/@patelmark">
+                  <i className="fab fa-figma" />
                 </a>
               </li>
             </ul>

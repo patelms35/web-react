@@ -9,7 +9,7 @@ import ScrollReveal from "scrollreveal";
 
 const Home = () => {
   function redirectToNextPage() {
-    window.location.href = "https://patelmark.in/";
+    window.location.href = "/portfolio";
   }
 
   //Services section - Modal
@@ -175,7 +175,6 @@ const Home = () => {
   });
 
   //Responsive navigation menu toggle
-
   React.useEffect(() => {
     const menuBtn = document.querySelector(".nav-menu-btn");
     const closeBtn = document.querySelector(".nav-close-btn");
@@ -1143,10 +1142,10 @@ const Home = () => {
                 <a href="#skills">Skills</a>
               </li>
               <li>
-                <a href="#Services">Services</a>
+                <a href="#services">Services</a>
               </li>
               <li>
-                <a href="#Portfolio">Project</a>
+                <a href="#portfolio">Portfolio</a>
               </li>
             </ul>
           </div>

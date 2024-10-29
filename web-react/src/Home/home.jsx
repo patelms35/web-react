@@ -1,8 +1,8 @@
 import React from "react";
 import "./home.css";
 import ScrollReveal from "scrollreveal";
+import Typed from "typed.js";
 
-// 1 .typing Animation baki
 // 2. portfolio ma view more nu section baki
 // 3. contact ma form submit karvanu je YT ma jovanu 6
 // 4. phone ma menu button ma click karva ma problem 6
@@ -11,6 +11,26 @@ const Home = () => {
   function redirectToNextPage() {
     window.location.href = "/portfolio";
   }
+
+  // typing
+  React.useEffect(() => {
+    const typed = new Typed(".auto-type", {
+      strings: [
+        "UI/UX Designer",
+        "Active Learner",
+        "Frontend Developer",
+        "YouTuber",
+        "Web Designer",
+      ],
+      typeSpeed: 80,
+      backSpeed: 50,
+      loop: true,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, []);
 
   //Services section - Modal
   React.useEffect(() => {
@@ -291,6 +311,8 @@ const Home = () => {
           <div className="nav-menu-btn"></div>
         </div>
       </header>
+
+      {/*=======Home section=======*/}
       <section className="home flex-center" id="home">
         <div className="home-container">
           <div className="media-icons">
@@ -687,7 +709,13 @@ const Home = () => {
                     <h3>Web Development</h3>
                     <h4>What is Web Development ?</h4>
                     <p>
-                    Web development is the creation and maintenance of websites and web applications, focusing on both visual design (frontend) and server-side functionality (backend). It includes coding in languages like HTML, CSS, and JavaScript, managing databases, and deploying sites on the web, creating everything from simple sites to complex applications.
+                      Web development is the creation and maintenance of
+                      websites and web applications, focusing on both visual
+                      design (frontend) and server-side functionality (backend).
+                      It includes coding in languages like HTML, CSS, and
+                      JavaScript, managing databases, and deploying sites on the
+                      web, creating everything from simple sites to complex
+                      applications.
                     </p>
                     <h4>What I provide</h4>
                     <ul>
@@ -696,7 +724,8 @@ const Home = () => {
                         Design
                       </li>
                       <li>
-                        <i className="fas fa-check-circle" /> Front-End Development
+                        <i className="fas fa-check-circle" /> Front-End
+                        Development
                       </li>
                       <li>
                         <i className="fas fa-check-circle" /> Testing

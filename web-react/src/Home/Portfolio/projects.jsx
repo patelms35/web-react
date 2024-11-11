@@ -1,7 +1,7 @@
 import React from "react";
-import "./portfolio.css";
+import "./projects.css";
 
-const Portfolio = () => {
+const Project = () => {
   //Portfolio section - Modal
   React.useEffect(() => {
     const portfolioModals = document.querySelectorAll(".porfolio-model");
@@ -743,4 +743,4 @@ const Portfolio = () => {
   );
 };
 
-export default Portfolio;
+export default Project;

@@ -44,8 +44,8 @@ const Portfolio = () => {
     };
   }, []);
 
-  function redirectToNextPage() {
-    window.location.href = "./Portfolio/portfolio.jsx";
+  const redirectToNextPage = () => {
+    window.location.href = "/projects";
   }
   return (
     <>

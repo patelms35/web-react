@@ -1,12 +1,15 @@
 # My Personal Portfolio Website
 
-Welcome to my personal website repository. This project contains the source code for my personal website, designed and developed to showcase my skills, portfolio, and other personal information.
+This repository contains the code for **Patel Mark's** personal portfolio website.
 
 ## Copyright
 
-© [2021-2024] Patel Mark. All rights reserved.
+© 2021-2024 Patel Mark. All rights reserved.
 
 All content in this repository, including code, design, text, and other assets, is owned by **Patel Mark**. Unauthorized copying, reproduction, or redistribution of this content, in part or in full, without express written permission from **Patel Mark** is strictly prohibited.
+
+**Warning**: This code is not intended to be used or duplicated in part or whole for other personal or commercial websites. Using this code directly for any personal portfolio, commercial project, or derivative works is strictly prohibited.
+
 
 ## License
 

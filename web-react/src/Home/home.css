@@ -1324,7 +1324,7 @@ footer a {
 
   .nav-close-btn {
     position: absolute;
-    background: url(./close-btn.png) no-repeat;
+    /* background: "url(./close-btn.png)" no-repeat; */
     filter: var(--color-filter);
     background-size: 12px;
     background-position: center;
@@ -1334,10 +1334,11 @@ footer a {
     right: 0;
     margin: 10px;
     cursor: pointer;
+    z-index: 1;
   }
 
   .nav-menu-btn {
-    background: url(/menu-btn.png);
+    /* background: url(/menu-btn.png); */
     filter: var(--color-filter);
     background-size: 30px;
     background-position: center;

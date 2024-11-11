@@ -10,10 +10,14 @@ import Contact from "./contact";
 import Footer from "./footer";
 
 // 1. contact ma form submit karvanu je YT ma jovanu 6
-// 2. phone ma menu button ma click karva ma problem 6
-// 3. home ma typing ma problem 6
 
 const Home = () => {
+  const myStyle = {
+    backgroundImage: "url('./close-btn.png')",
+  };
+  const back = {
+    backgroundImage: "url('./menu-btn.png')",
+  };
   // typing
   React.useEffect(() => {
     const typed = new Typed(".auto-type", {
@@ -215,7 +219,7 @@ const Home = () => {
           </a>
           <div className="navigation">
             <div className="nav-items">
-              <div className="nav-close-btn"></div>
+              <div className="nav-close-btn" style={myStyle}></div>
               <a className="active" href="#home">
                 Home
               </a>
@@ -226,7 +230,7 @@ const Home = () => {
               <a href="#contact">Contact</a>
             </div>
           </div>
-          <div className="nav-menu-btn"></div>
+          <div className="nav-menu-btn"  style={back}></div>
         </div>
       </header>
 

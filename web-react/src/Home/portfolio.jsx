@@ -45,7 +45,7 @@ const Portfolio = () => {
   }, []);
 
   function redirectToNextPage() {
-    window.location.href = "./portfolio";
+    window.location.href = "./Portfolio/portfolio.jsx";
   }
   return (
     <>

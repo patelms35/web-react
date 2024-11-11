@@ -9,7 +9,6 @@ import Portfolio from "./portfolio";
 import Contact from "./contact";
 import Footer from "./footer";
 
-// 1. contact ma form submit karvanu je YT ma jovanu 6
 
 const Home = () => {
   const myStyle = {

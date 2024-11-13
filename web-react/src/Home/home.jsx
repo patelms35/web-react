@@ -603,7 +603,10 @@ const Home = () => {
 
       {/*=======Footer=======*/}
 
-      <Footer />
+      <div>
+        {/* Your component JSX */}
+        <Footer />
+      </div>
 
       {/*=======Preloader=======*/}
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

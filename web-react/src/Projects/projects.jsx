@@ -9,6 +9,28 @@ const Projects = () => {
     window.scrollTo(0, 0); // Scrolls to the top of the page when Projects page is rendered
   }, []);
 
+  //Responsive navigation menu toggle
+  React.useEffect(() => {
+    const menuBtn = document.querySelector(".nav-menu-btn");
+    const closeBtn = document.querySelector(".nav-close-btn");
+    const navigation = document.querySelector(".navigation");
+    const navItems = document.querySelectorAll(".nav-items a");
+
+    menuBtn.addEventListener("click", () => {
+      navigation.classList.add("active");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      navigation.classList.remove("active");
+    });
+
+    navItems.forEach((navItem) => {
+      navItem.addEventListener("click", () => {
+        navigation.classList.remove("active");
+      });
+    });
+  }, []);
+
   React.useEffect(() => {
     const portfolioModals = document.querySelectorAll(".porfolio-model");
     const imgCards = document.querySelectorAll(".img-card");
@@ -34,7 +56,6 @@ const Projects = () => {
       });
     });
 
-    // Cleanup event listeners on component unmount
     return () => {
       imgCards.forEach((imgCard, i) => {
         imgCard.removeEventListener("click", () => {
@@ -177,7 +198,7 @@ const Projects = () => {
           <div className="navigation">
             <div className="nav-items">
               <div className="nav-close-btn" style={myStyle}></div>
-              <a>Home</a>
+              <a href="/">Home</a>
               <a href="/">About</a>
               <a href="/">Skills</a>
               <a href="/">Services</a>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./home.css";
 import ScrollReveal from "scrollreveal";
 import Typed from "typed.js";
@@ -6,7 +7,7 @@ import About from "./about";
 import Skill from "./skill";
 import Service from "./service";
 import Contact from "./contact";
-import Footer from "./footer";
+import Footer from "./Footer";
 
 const Home = () => {
   const myStyle = {
@@ -177,9 +178,9 @@ const Home = () => {
     };
   }, []);
 
-  const redirectToNextPage = () => {
-    window.location.href = "/projects";
-  };
+  // const redirectToNextPage = () => {
+  //   window.location.href = "/projects";
+  // };
 
   //Scroll reveal animations
   React.useEffect(() => {
@@ -586,11 +587,13 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <button className="learn-more" onClick={redirectToNextPage}>
-          <span className="circle" aria-hidden="true">
-            <span className="icon arrow" />
-          </span>
-          <span className="button-text">View more </span>
+        <button className="learn-more">
+          <Link to="/projects">
+            <span className="circle" aria-hidden="true">
+              <span className="icon arrow" />
+            </span>
+            <span className="button-text">View more </span>
+          </Link>
         </button>
       </section>
 

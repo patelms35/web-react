@@ -1,8 +1,14 @@
 import React from "react";
 import "./projects.css";
+import Footer from "../home/footer";
 
-const Project = () => {
+const Projects = () => {
   //Portfolio section - Modal
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to the top of the page when Projects page is rendered
+  }, []);
+
   React.useEffect(() => {
     const portfolioModals = document.querySelectorAll(".porfolio-model");
     const imgCards = document.querySelectorAll(".img-card");
@@ -139,6 +145,13 @@ const Project = () => {
     };
   }, []);
 
+  const myStyle = {
+    backgroundImage: "url('./close-btn.png')",
+  };
+  const back = {
+    backgroundImage: "url('./menu-btn.png')",
+  };
+
   return (
     <>
       <link
@@ -163,18 +176,18 @@ const Project = () => {
           </a>
           <div className="navigation">
             <div className="nav-items">
-              <div className="nav-close-btn" />
-              <a href="/">Home</a>
+              <div className="nav-close-btn" style={myStyle}></div>
+              <a>Home</a>
               <a href="/">About</a>
               <a href="/">Skills</a>
               <a href="/">Services</a>
-              <a className="active" href="#portfolio">
+              <a className="active" href="/">
                 Portfolio
               </a>
               <a href="/">Contact</a>
             </div>
           </div>
-          <div className="nav-menu-btn" />
+          <div className="nav-menu-btn" style={back}></div>
         </div>
       </header>
 
@@ -662,85 +675,9 @@ const Project = () => {
       </section>
 
       {/*=======Footer=======*/}
-      <footer>
-        <div className="footer-container">
-          <div className="about group">
-            <h2>
-              <li>
-                <a href="/">Mark</a>
-              </li>
-            </h2>
-            <p>UI / UX Designer</p>
-          </div>
-          <div className="hr" />
-          <div className="info group">
-            <h3>More</h3>
-            <ul>
-              <li>
-                <a href="/">Home</a>
-              </li>
-              <li>
-                <a href="/">About</a>
-              </li>
-              <li>
-                <a href="/">Skills</a>
-              </li>
-              <li>
-                <a href="/">Services</a>
-              </li>
-              <li>
-                <a href="/">Project</a>
-              </li>
-            </ul>
-          </div>
-          <div className="hr" />
-          <div className="follow group">
-            <h3>Follow</h3>
-            <ul>
-              <li>
-                <a href="https://www.facebook.com/patel.mark.52">
-                  <i className="fab fa-facebook-f" />
-                </a>
-              </li>
-              <li>
-                <a href="https://instagram.com/patel_mark_7262?igshid=YmMyMTA2M2Y=">
-                  <i className="fab fa-instagram" />
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/patelms35">
-                  <i className="fab fa-github" />
-                </a>
-              </li>
-              <li>
-                <a href="https://www.youtube.com/channel/UCTbJyXCrEsNSaubviNQC2tg">
-                  <i className="fab fa-youtube" />
-                </a>
-              </li>
-              <li>
-                <a href="https://www.linkedin.com/in/patelmark6172">
-                  <i className="fab fa-linkedin" />
-                </a>
-              </li>
-              <li>
-                {" "}
-                <a href="https://www.figma.com/@patelmark">
-                  <i className="fab fa-figma" />
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="footer-copyright group">
-          <li>
-            <a href="https://instagram.com/patel_mark_7262?igshid=YmMyMTA2M2Y=">
-              <p>Made With ❤️ By Mark Patel Copyright © 2021-2024 .</p>
-            </a>
-          </li>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 };
 
-export default Project;
+export default Projects;

@@ -7,7 +7,7 @@ import About from "./about";
 import Skill from "./skill";
 import Service from "./service";
 import Contact from "./contact";
-import Footer from "./Footer";
+import Footer from "./footer";
 
 const Home = () => {
   const myStyle = {

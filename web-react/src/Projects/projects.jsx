@@ -1,6 +1,6 @@
 import React from "react";
 import "./projects.css";
-import Footer from "../home/footer";
+import Footer from "../Home/footer";
 
 const Projects = () => {
   //Portfolio section - Modal
